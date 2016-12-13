@@ -75,7 +75,7 @@ void PainterWindow::setupMenus() {
     addToolBar(colorToolbar);
     addToolBar(tBar);
    // mBar->addMenu(menu);
-    mBar->addMenu(menu1);
+  //  mBar->addMenu(menu1);
 
 
 
@@ -197,14 +197,51 @@ void PainterWindow::AddEdge()
 void PainterWindow::DeleteEdge()
 {
     auto selected = mScene->selectedItems();
-    for (auto i : selected)
+   for (auto i :  selected)
     {
-        mScene->removeItem(i);
-        lines.clear();
-      
+        for (auto j=0; j<lines.size(); j++)
+        {
 
-        
-    }
+            if (lines[j]==i)
+            lines.erase(lines.begin()+j);
+        }
+       mScene->removeItem(i);
+ // lines.clear();
+
+  //     bool flag = true;
+
+       for (auto k:lines )
+       {
+
+
+           if ((k->ver1==i)  || (k->ver2==i) )
+           {
+                for (auto n=0; n<lines.size(); n++)
+                {
+                     if (lines[n]==k)
+                    {
+
+                        lines.erase(lines.begin()+n);
+                        mScene->removeItem(k);
+                    }
+                }
+           }
+        }
+       for (auto k: names)
+       {
+           if (k->circle==i)
+           {
+              for (auto n=0; n< names.size(); n++)
+              {
+                  if (names[n]==k)
+                  {
+                      names.erase(names.begin()+n);
+                      mScene->removeItem(k);
+                  }
+              }
+           }
+       }
+}
 }
 QIcon PainterWindow::createIcon(QColor color) {
 
