@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-12-09T23:08:11
+# Project created by QtCreator 2016-12-14T08:56:11
 #
 #-------------------------------------------------
 
@@ -8,20 +8,22 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = IHopeItWillWork
+TARGET = Graphs
 TEMPLATE = app
-
 QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += main.cpp\
         painterwindow.cpp \
-    lineitem.cpp \
     circleitem.cpp \
-    textitem.cpp
+    lineitem.cpp \
+    textitem.cpp \
+    dialog.cpp
 
 HEADERS  += painterwindow.h \
-    CircleItem.h \
+    circleItem.h \
+    textitem.h \
     lineItem.h \
-    textitem.h
+    dialog.h
 
-FORMS    += painterwindow.ui
+FORMS    += painterwindow.ui \
+    dialog.ui
