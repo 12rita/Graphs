@@ -18,6 +18,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "dialog.h"
+#include <QKeyEvent>
 
 namespace Ui {
 class PainterWindow;
@@ -58,6 +59,8 @@ public slots:
     void AddEdge1(QString *a, QString *b);
     void DeleteEdge1(QString *a, QString *b);
     void ClearAll();
+protected:
+void keyPressEvent(QKeyEvent *event);
 
 
 
