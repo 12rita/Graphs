@@ -2,18 +2,22 @@
 #define PAINTERWINDOW_H
 
 #include <QMainWindow>
-#include <QMainWindow>
 #include "qgraphicsview.h"
 #include <QMenu>
 //#include "triangleitem.h"
 #include <QPair>
 #include <QColor>
-#include "CircleItem.h"
+#include "circleItem.h"
 #include "lineItem.h"
 #include <vector>
 #include <QGraphicsTextItem>
 #include <QObject>
 #include "textitem.h"
+#include <fstream>
+#include <iostream>
+#include <QFile>
+#include <QTextStream>
+#include "dialog.h"
 
 namespace Ui {
 class PainterWindow;
@@ -44,10 +48,17 @@ public slots:
     void zoomIn();
     void zoomOut();
     void setColor(QAction*);
-    //void sceneChanged();
     void AddEdge();
     void rework();
     void DeleteEdge();
+    void writeTeX();
+    void ShowDialog();
+    void paintCircle1(QString *a);
+    void RemoveCircle(QString *a);
+    void AddEdge1(QString *a, QString *b);
+    void DeleteEdge1(QString *a, QString *b);
+    void ClearAll();
+
 
 
 };
