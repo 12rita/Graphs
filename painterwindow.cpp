@@ -8,7 +8,7 @@ PainterWindow::PainterWindow(QWidget *parent) :
     ui->setupUi(this);
     setupSceneThings();
     setupMenus();
-     connect(this, SIGNAL(mouseDoubleClickEvent(QMouseEvent * event)), this, SLOT(ShowDialogCol()));
+  //   connect(this, SIGNAL(mouseDoubleClickEvent(QMouseEvent * event)), this, SLOT(ShowDialogCol()));
 
 }
 
@@ -558,13 +558,13 @@ item->setSelected(true);
 }
 }
 
- QPixmap::mouseDoubleClickEvent( QMouseEvent * e )
+/* QPixmap::mouseDoubleClickEvent( QMouseEvent * e )
 {
 if ( e->button() == Qt::LeftButton )
 {
 ...
 }
-}
+}*/
 
 /*void PainterWindow::mousePressEvent(QMouseEvent *event)
 {
