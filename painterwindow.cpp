@@ -8,35 +8,70 @@ PainterWindow::PainterWindow(QWidget *parent) :
     ui->setupUi(this);
     setupSceneThings();
     setupMenus();
+     connect(this, SIGNAL(mouseDoubleClickEvent(QMouseEvent * event)), this, SLOT(ShowDialogCol()));
 
 }
 
 
 int CircleItem::st=0;
 
+void PainterWindow::rename(QString a,QString b)
+{
+    for(auto i: vertex)
+    {
+        if (i->text->toPlainText()==a)
+        {
+            i->text->setPlainText(b);
+        }
+    }
+}
+
 void PainterWindow::setupMenus() {
 
 
 
-    QMenu *menu = new QMenu("Options", this);
+    QMenu *menu = new QMenu("File", this);
 
    QMenuBar* mBar = menuBar();
+
+   QMenu *menu1 = new QMenu("View", this);
+
+   QMenu *menu2 = new QMenu("Design", this);
+  QMenu *menu3=new QMenu("Help", this);
+
+
 
     QToolBar* tBar = new QToolBar(this);
 
 
+    QAction *helping = new QAction("Help", this);
+    connect(helping, SIGNAL(triggered(bool)), this, SLOT(ShowDialog2()));
+   menu3->addAction(helping);
 
-    QAction *drawCircle = new QAction("Circle", this);
+
+    QAction *newg = new QAction("New graph", this);
+    connect(newg, SIGNAL(triggered(bool)), this, SLOT(ShowDialog()));
+    menu->addAction(newg);
+
+    QAction *comm = new QAction("Command", this);
+    connect(comm, SIGNAL(triggered(bool)), this, SLOT(ShowDialog1()));
+    menu->addAction(comm);
+
+    QAction *drawCircle = new QAction("Vertex", this);
     connect(drawCircle, SIGNAL(triggered()), this, SLOT(paintCircle()));
-    tBar->addAction(drawCircle);
+    menu2->addAction(drawCircle);
 
-    QAction *zoomin = new QAction("zoomIn", this);
+    QAction *addEdge = new QAction("Edge", this);
+    connect(addEdge, SIGNAL(triggered()), this, SLOT(AddEdge()));
+    menu2->addAction(addEdge);
+
+    QAction *zoomin = new QAction("Zoom in", this);
     connect(zoomin, SIGNAL(triggered()), this, SLOT(zoomIn()));
-    menu->addAction(zoomin);
+    menu1->addAction(zoomin);
 
-    QAction *zoomout = new QAction("zoomOut", this);
+    QAction *zoomout = new QAction("Zoom out", this);
     connect(zoomout, SIGNAL(triggered()), this, SLOT(zoomOut()));
-    menu->addAction(zoomout);
+    menu1->addAction(zoomout);
 
     QAction *saving = new QAction("Save", this);
     connect(saving, SIGNAL(triggered()), this, SLOT(writeTeX()));
@@ -44,25 +79,23 @@ void PainterWindow::setupMenus() {
 
     QAction *clearin = new QAction("Clear all", this);
     connect(clearin, SIGNAL(triggered()), this, SLOT(ClearAll()));
-    menu->addAction(clearin);
-
-
-    QAction *addEdge = new QAction("Edge", this);
-    connect(addEdge, SIGNAL(triggered()), this, SLOT(AddEdge()));
-    tBar->addAction(addEdge);
+    menu2->addAction(clearin);
 
     QAction *deleteob = new QAction("Delete", this);
     connect(deleteob, SIGNAL(triggered()), this, SLOT(DeleteEdge()));
     tBar->addAction(deleteob);
 
-    QAction *comm = new QAction("Command", this);
-    connect(comm, SIGNAL(triggered(bool)), this, SLOT(ShowDialog()));
-    tBar->addAction(comm);
+    QAction *colour = new QAction("Colour", this);
+    connect(colour, SIGNAL(triggered()), this, SLOT(ShowDialogCol()));
+    tBar->addAction(colour);
 
-    auto colors = std::vector<QColor>();
+   // auto colors = std::vector<QColor>();
+
     colors.push_back(QColor(251, 251, 40));
     colors.push_back(QColor(237, 230, 203));
     colors.push_back(QColor(61, 248, 215));
+  //  colors.push_back(QColorDialog::getColor());
+
 
     QActionGroup* ag = new QActionGroup(this);
 
@@ -77,9 +110,13 @@ void PainterWindow::setupMenus() {
     connect(ag, SIGNAL(triggered(QAction*)), this, SLOT(setColor(QAction*)));
 
 
+
     addToolBar(colorToolbar);
     addToolBar(tBar);
     mBar->addMenu(menu);
+    mBar->addMenu(menu1);
+    mBar->addMenu(menu2);
+    mBar->addMenu(menu3);
 }
 
 
@@ -116,7 +153,21 @@ void PainterWindow::ShowDialog()
     Dialog* dial= new Dialog(this);
     dial->show();
 }
-
+void PainterWindow::ShowDialog1()
+{
+    Dialog1* dial= new Dialog1(this);
+    dial->show();
+}
+void PainterWindow::ShowDialog2()
+{
+    Help* h= new Help (this);
+    h->show();
+}
+void PainterWindow::ShowDialogCol()
+{
+    QColorDialog* c= new QColorDialog (this);
+    c->show();
+}
 void PainterWindow::setupSceneThings() {
     mScene = new QGraphicsScene(this);
     mScene->setSceneRect(0, 0, 2000, 2000);
@@ -173,20 +224,20 @@ void PainterWindow::AddEdge()
 {
 
     auto selectedCircles = mScene->selectedItems();
-    for (int i = 0; i < selectedCircles.size();i++)
-    {
-        for (int j = i+1; j < selectedCircles.size(); j++)
-        {
-             bool flag = true;
+       for (int i = 0; i < selectedCircles.size();i++)
+       {
+           for (int j = i+1; j < selectedCircles.size(); j++)
+           {
+                bool flag = true;
 
 
-            for (auto k:lines )
-            {
+               for (auto k:lines )
+               {
 
-                if (((k->ver1==selectedCircles[i])&& (k->ver2==selectedCircles[j])) || ((k->ver2==selectedCircles[i])&& (k->ver1==selectedCircles[j])) )
-                    flag=false;
+                   if (((k->ver1==selectedCircles[i])&& (k->ver2==selectedCircles[j])) || ((k->ver2==selectedCircles[i])&& (k->ver1==selectedCircles[j]))  || (selectedCircles[i] == k) || (selectedCircles[j]==k) )
+                       flag=false;
 
-            }
+               }
             if (flag)
              {
                  lineItem* newline = new lineItem(selectedCircles[i], selectedCircles[j]);
@@ -199,6 +250,7 @@ void PainterWindow::AddEdge()
 
 
 }
+
 void PainterWindow::DeleteEdge()
 {
     auto selected = mScene->selectedItems();
@@ -305,6 +357,7 @@ void PainterWindow::DeleteEdge()
               }
 }
 }
+
 void PainterWindow::RemoveCircle(QString* a){
 
    for (auto i: vertex)
@@ -354,10 +407,12 @@ void PainterWindow::RemoveCircle(QString* a){
    }
 }
 
- void PainterWindow::AddEdge1(QString* a, QString* b)
+
+void PainterWindow::AddEdge1(QString* a, QString* b)
  {
-     QGraphicsItem* circle1;
-     QGraphicsItem* circle2;
+     //if(((*a).ismpty())||((*b).isempty())) return;
+     QGraphicsItem* circle1=nullptr;
+     QGraphicsItem* circle2=nullptr;
      for (auto i:names)
      {
          if (i->toPlainText()== *a)
@@ -366,15 +421,25 @@ void PainterWindow::RemoveCircle(QString* a){
             circle2=i->circle;
 
      }
-     bool flag = true;
+
+     bool flag = false;
+     bool f1 = false;
+     bool f2 = false;
+     for (auto i : vertex)
+     {
+        if (i == circle1) f1 = true;
+        if (i == circle2) f2 = true;
+     }
+     if ((f1)&&(f2)) flag = true;
+
 
 
     for (auto k:lines )
     {
 
-        if (((k->ver1==circle1)&& (k->ver2==circle2)) || ((k->ver2==circle1)&& (k->ver1==circle2)) || (circle1==circle2) )
+        if (((k->ver1==circle1)&& (k->ver2==circle2)) || ((k->ver2==circle1)&& (k->ver1==circle2)) || (circle1==circle2)  )
         {
-flag=false;
+            flag=false;
         }
 
     }
@@ -386,6 +451,7 @@ flag=false;
      }
 
  }
+
 void PainterWindow:: DeleteEdge1(QString* a, QString* b)
 {
     QGraphicsItem* circle1;
@@ -415,6 +481,8 @@ void PainterWindow:: DeleteEdge1(QString* a, QString* b)
 
 }
 
+
+
 QIcon PainterWindow::createIcon(QColor color) {
 
     QPixmap mPix(20, 20);
@@ -422,14 +490,15 @@ QIcon PainterWindow::createIcon(QColor color) {
     QPainter mPaint(&mPix);
     mPaint.setBrush(QBrush(color));
     mPaint.drawRect(0, 0, 20, 20);
+   return QIcon(mPix);
 
-    return QIcon(mPix);
 
 }
 
+
 void PainterWindow::writeTeX()
 {
-    QFile mWrite("2.txt");
+    QFile mWrite("TeX.txt");
     QTextStream out (&mWrite);
      if (!mWrite.open(QIODevice::WriteOnly | QIODevice::Text))
           return;
@@ -478,6 +547,7 @@ out<< "n"<<text1<<"/n"<<text2<<",";
 
 }
 
+
 void PainterWindow::keyPressEvent(QKeyEvent *event)
 {
 if(event->key()==Qt::Key_A&&QApplication::keyboardModifiers() == Qt::ControlModifier){
@@ -485,10 +555,36 @@ for(CircleItem* item:vertex)
 {
 item->setSelected(true);
 }
-
 }
 }
 
+ QPixmap::mouseDoubleClickEvent( QMouseEvent * e )
+{
+if ( e->button() == Qt::LeftButton )
+{
+...
+}
+}
+
+/*void PainterWindow::mousePressEvent(QMouseEvent *event)
+{
+    QMoveEvent* m;
+
+
+    for (auto i: colors)
+
+    {
+   auto Pix = createIcon(i);
+   if (event->button()==Qt::RightButton) //mouseDoubleClickEvent(*event))
+{
+   if ( Pix == qgraphicsitem_cast<QGraphicsPixmapItem*>((m->pos())))
+   {
+    ShowDialogCol();
+   }
+
+}
+}
+}*/
 
 void PainterWindow::setColor(QAction* mAct)
 
