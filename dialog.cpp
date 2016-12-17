@@ -12,7 +12,9 @@ void Dialog::on_pushButton_clicked()
 {
   QString a = ui->lineEdit->text();
   auto p = dynamic_cast<PainterWindow*>(parent());
-    p->paintCircle1(&a);
+    p->paintCircle1(&a);//так я могу создать несколько вершин с одинаковым именем,
+    //но когда в комманде указываю соеденить вершину с этим именем с какой-то другой,
+    //соединяется только последняя вершина с данным именем, а не все
 }
 
 void Dialog::on_pushButton_3_clicked()
@@ -36,7 +38,7 @@ void Dialog::on_pushButton_2_clicked()
        auto p = dynamic_cast<PainterWindow*>(parent());
        if ( ui->comboBox->currentText()=="Add edge")
        {
-         p->AddEdge1(&a, &b);
+         p->AddEdge1(&a, &b);//нет запрета на одинаковые вершины
 
    }
    else
@@ -52,7 +54,7 @@ Dialog::~Dialog()
     delete ui;
 }
 
-void Dialog::on_pushButton_6_clicked()
+void Dialog::on_pushButton_6_clicked()//очень полезный слот
 {
 
 }

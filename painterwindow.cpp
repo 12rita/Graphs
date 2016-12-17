@@ -5,7 +5,8 @@ PainterWindow::PainterWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::PainterWindow)
 {
-    ui->setupUi(this);
+    ui->setupUi(this);//При закрытии главного окна остальные окна остаются, приходиться щёлкать
+                      //Целесообразнее допускать испозьзование только одно из 3 интерфейсов
     setupSceneThings();
     setupMenus();
   //   connect(this, SIGNAL(mouseDoubleClickEvent(QMouseEvent * event)), this, SLOT(ShowDialogCol()));
@@ -45,16 +46,17 @@ void PainterWindow::setupMenus() {
 
 
     QAction *helping = new QAction("Help", this);
-    connect(helping, SIGNAL(triggered(bool)), this, SLOT(ShowDialog2()));
+    connect(helping, SIGNAL(triggered(bool)), this, SLOT(ShowDialog2()));//могу открыть окно много раз
+                                                                        //справка некорректна, команды написаны с большой буквы
    menu3->addAction(helping);
 
 
     QAction *newg = new QAction("New graph", this);
-    connect(newg, SIGNAL(triggered(bool)), this, SLOT(ShowDialog()));
+    connect(newg, SIGNAL(triggered(bool)), this, SLOT(ShowDialog()));// могу открыть окно много раз
     menu->addAction(newg);
 
     QAction *comm = new QAction("Command", this);
-    connect(comm, SIGNAL(triggered(bool)), this, SLOT(ShowDialog1()));
+    connect(comm, SIGNAL(triggered(bool)), this, SLOT(ShowDialog1()));// могу открыть окно много раз
     menu->addAction(comm);
 
     QAction *drawCircle = new QAction("Vertex", this);
@@ -180,8 +182,8 @@ void PainterWindow::setupSceneThings() {
 
 void PainterWindow::paintCircle() {
 
-     CircleItem* mCircle = new CircleItem();
-    textItem* name = new textItem(QString::number(mCircle->st), mCircle);
+     CircleItem* mCircle = new CircleItem();//утечка памяти
+    textItem* name = new textItem(QString::number(mCircle->st), mCircle);//утечка
 
     mScene->addItem(mCircle);
     mCircle->setPos(mView->mapToScene(0,0));
@@ -193,7 +195,7 @@ void PainterWindow::paintCircle() {
     mCircle->tie(name);
 }
 void PainterWindow::paintCircle1(QString* a){
-    CircleItem* mCircle = new CircleItem();
+    CircleItem* mCircle = new CircleItem();//утечка
     mScene->addItem(mCircle);
     mCircle->setPos(mView->mapToScene(0,0));
     vertex.push_back(mCircle);
@@ -240,7 +242,7 @@ void PainterWindow::AddEdge()
                }
             if (flag)
              {
-                 lineItem* newline = new lineItem(selectedCircles[i], selectedCircles[j]);
+                 lineItem* newline = new lineItem(selectedCircles[i], selectedCircles[j]);//утечка
                  mScene->addItem(newline);
                  lines.push_back(newline);
              }
@@ -335,10 +337,9 @@ void PainterWindow::DeleteEdge()
    {
         bool f1=false;
         bool f2=false;
-
-   for (auto j: vertex)
-   {
-     if (k->ver1==j)
+        for (auto j: vertex)
+        {
+        if (k->ver1==j)
         f1=true;
      if (k->ver2==j)
            f2=true;
@@ -358,7 +359,7 @@ void PainterWindow::DeleteEdge()
 }
 }
 
-void PainterWindow::RemoveCircle(QString* a){
+void PainterWindow::RemoveCircle(QString* a){ //неправильно работает для вершин с одинаковым именем(могу получить вершину без имени)
 
    for (auto i: vertex)
    {

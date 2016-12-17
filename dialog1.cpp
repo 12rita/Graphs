@@ -13,7 +13,7 @@ Dialog1::Dialog1(QWidget *parent) :
 
 void Dialog1::on_pushButton_clicked()
 {
-      parser();
+      parser();//нет никакой обработки некорректного ввода
 }
 
 void Dialog1::parser()
@@ -32,7 +32,7 @@ void Dialog1::parser()
         {
             a>>l3;
 
-            p->paintCircle1(&l3);
+            p->paintCircle1(&l3);//могу добавлять вершины с одинаковыми именами
         }
         if (l2=="edge")
         {

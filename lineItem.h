@@ -4,7 +4,8 @@
 #include <QPointF>
 #include "circleItem.h"
 
-class lineItem : public QGraphicsLineItem
+class lineItem : public QGraphicsLineItem//Вместо двух классов lineitem и textitem
+                                         //можно было создать один, устанавливающий все связи
 {
 public:
 	lineItem();

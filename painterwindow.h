@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "qgraphicsview.h"
 #include <QMenu>
-//#include "triangleitem.h"
+//#include "triangleitem.h"  //палево с лабы
 #include <QPair>
 #include <QColor>
 #include "circleItem.h"
@@ -58,10 +58,10 @@ public slots:
     void rework();
     void DeleteEdge();
     void writeTeX();
-    void ShowDialog();
-    void ShowDialog1();
-    void ShowDialog2();
-    void ShowDialogCol();
+    void ShowDialog();// целесообразнее использовать один метод открытия окна, принимающий указатель на окно
+    void ShowDialog1();//
+    void ShowDialog2();//
+    void ShowDialogCol();//
     void paintCircle1(QString *a);
     void RemoveCircle(QString *a);
     void AddEdge1(QString *a, QString *b);
