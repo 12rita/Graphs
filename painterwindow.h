@@ -18,8 +18,11 @@
 #include <QFile>
 #include <QTextStream>
 #include "dialog.h"
+#include "dialog1.h"
 #include <QKeyEvent>
-
+#include <QMouseEvent>
+#include "help.h"
+#include <QColorDialog>
 namespace Ui {
 class PainterWindow;
 }
@@ -40,6 +43,8 @@ private:
     std::vector<lineItem*> lines;
     std::vector<CircleItem*>vertex;
     std::vector<textItem*>names;
+    std::vector<textItem*>names_lines;
+    std::vector<QColor>colors;
     QGraphicsView *mView;
     QGraphicsScene *mScene;
 
@@ -54,13 +59,19 @@ public slots:
     void DeleteEdge();
     void writeTeX();
     void ShowDialog();
+    void ShowDialog1();
+    void ShowDialog2();
+    void ShowDialogCol();
     void paintCircle1(QString *a);
     void RemoveCircle(QString *a);
     void AddEdge1(QString *a, QString *b);
     void DeleteEdge1(QString *a, QString *b);
     void ClearAll();
+    void rename(QString a,QString b);
+
 protected:
 void keyPressEvent(QKeyEvent *event);
+void mousePressEvent(QMouseEvent *event);
 
 
 
