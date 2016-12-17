@@ -46,8 +46,13 @@ void Dialog::on_pushButton_2_clicked()
 
 }
 
+
 Dialog::~Dialog()
 {
     delete ui;
 }
 
+void Dialog::on_pushButton_6_clicked()
+{
+
+}
