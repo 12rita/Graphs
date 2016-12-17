@@ -17,13 +17,24 @@ SOURCES += main.cpp\
     circleitem.cpp \
     lineitem.cpp \
     textitem.cpp \
-    dialog.cpp
+    dialog.cpp \
+    dialog1.cpp \
+help.cpp
 
 HEADERS  += painterwindow.h \
     circleItem.h \
     textitem.h \
     lineItem.h \
-    dialog.h
+    dialog.h \
+    dialog1.h \
+help.h
 
 FORMS    += painterwindow.ui \
-    dialog.ui
+    dialog.ui \
+    dialog1.ui \
+    help.ui
+
+
+
+
+LIBS += -L/home/emironenko/

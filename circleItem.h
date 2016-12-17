@@ -4,7 +4,7 @@
 #include <QPointF>
 #include "textitem.h"
 
-class CircleItem : public QGraphicsEllipseItem
+class CircleItem : public QGraphicsEllipseItem //создавать отдельный класс для того, чтобы связать текст и вершину, не очень
 {
 public:
 	CircleItem();
