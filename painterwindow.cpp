@@ -85,9 +85,9 @@ void PainterWindow::setupMenus() {
     connect(deleteob, SIGNAL(triggered()), this, SLOT(DeleteEdge()));
     tBar->addAction(deleteob);
 
-    QAction *colour = new QAction("Colour", this);
+ /*   QAction *colour = new QAction("Colour", this);
     connect(colour, SIGNAL(triggered()), this, SLOT(ShowDialogCol()));
-    tBar->addAction(colour);
+    tBar->addAction(colour);*/
 
    // auto colors = std::vector<QColor>();
 
