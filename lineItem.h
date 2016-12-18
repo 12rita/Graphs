@@ -8,7 +8,7 @@ class lineItem : public QGraphicsLineItem
 {
 public:
 	lineItem();
-	QGraphicsItem* ver1;//почему не cirleitem ?
+	QGraphicsItem* ver1;//why not cirleitem ?
 	QGraphicsItem* ver2;//
 	lineItem(QGraphicsItem* a, QGraphicsItem* b);
 	void redo();

@@ -34,13 +34,13 @@ class PainterWindow : public QMainWindow
 public:
     explicit PainterWindow(QWidget *parent = 0);
     ~PainterWindow();
-    void setupMenus();//можно в приват
-    void setupSceneThings();//тоже
+    void setupMenus();//why not privat?
+    void setupSceneThings();//too
     QIcon createIcon(QColor color);
 
 private:
     Ui::PainterWindow *ui;
-    std::vector<lineItem*> lines;//можно использовать умные указатели, для гарантии разрушения
+    std::vector<lineItem*> lines;//may be smart pointers?
     std::vector<CircleItem*> vertex;//
     std::vector<textItem*> names;//
     std::vector<textItem*> names_lines;//
@@ -50,7 +50,7 @@ private:
 
 public slots:
     void paintCircle();
-    void rotateItem();//неиспользуется?
+    void rotateItem();//do not use?
     void zoomIn();
     void zoomOut();
     void setColor(QAction*);
@@ -62,10 +62,10 @@ public slots:
     void ShowDialog1();
     void ShowDialog2();
     void ShowDialogCol();
-    void paintCircle1(QString *a);//перегрузка
+    void paintCircle1(QString *a);//may be overload paint circle?
     void RemoveCircle(QString *a);
-    void AddEdge1(QString *a, QString *b);//можно было перегрузить предыдущую функцию
-    void DeleteEdge1(QString *a, QString *b);//тоже
+    void AddEdge1(QString *a, QString *b);//--
+    void DeleteEdge1(QString *a, QString *b);//--
     void ClearAll();
     void rename(QString a,QString b);
 
@@ -80,6 +80,6 @@ void keyPressEvent(QKeyEvent *event);
 #endif // PAINTERWINDOW_H
 
 
-#include <QtWidgets/QMainWindow> //в конце?
+#include <QtWidgets/QMainWindow> //in the end??
 
 

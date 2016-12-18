@@ -8,7 +8,7 @@ class textItem : public QGraphicsTextItem
 {
 public:
 	textItem();
-	QGraphicsItem* circle;//--
+	QGraphicsItem* circle;//why not circle item?
 	textItem(QString a, QGraphicsItem* c);
 	void movement();
 	~textItem();
