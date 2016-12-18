@@ -144,7 +144,7 @@ void PainterWindow::ClearAll(){
     names.clear();
     vertex.clear();
     mScene->clear();
-   CircleItem::st=0;
+   CircleItem::st=0;//???
 
 }
 
@@ -547,7 +547,7 @@ out<< "n"<<text1<<"/n"<<text2<<",";
 
 }
 
-
+/*
 void PainterWindow::keyPressEvent(QKeyEvent *event)
 {
 if(event->key()==Qt::Key_A&&QApplication::keyboardModifiers() == Qt::ControlModifier){
@@ -557,6 +557,7 @@ item->setSelected(true);
 }
 }
 }
+*/
 
 /* QPixmap::mouseDoubleClickEvent( QMouseEvent * e )
 {
